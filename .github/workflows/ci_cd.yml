@@ -40,9 +40,15 @@ jobs:
         run: |
           aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar --region "${{ secrets.ALIYUN_REGION }}"
 
+      - name: List FC Functions
+        run: |
+          echo "===== Listing all functions ====="
+          aliyun fc GET /2023-03-30/functions --region "${{ secrets.ALIYUN_REGION }}"
+          echo "===== End of functions list ====="
+
       - name: Update Alibaba Cloud Function
         run: |
-          aliyun fc PUT /services/default/functions/ci_cd_test \
+          aliyun fc PUT /2023-03-30/functions/ci_cd_test \
             --region "${{ secrets.ALIYUN_REGION }}" \
             --header "Content-Type=application/json" \
             --body "{\"code\":{\"ossBucketName\":\"ci-cd-test\",\"ossObjectName\":\"books-v1.0.jar\"}}"
