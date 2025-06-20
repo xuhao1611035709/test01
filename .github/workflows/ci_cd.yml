@@ -34,7 +34,7 @@ jobs:
           aliyun configure set \
             --profile default \
             --mode AK \
-            --region "${{ secrets.ALIYUN_REGION }}" \
+            --region "cn-shenzhen" \
             --access-key-id "${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}" \
             --access-key-secret "${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}"
 
