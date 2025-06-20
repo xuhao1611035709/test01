@@ -23,9 +23,7 @@ jobs:
 
       - name: Install Aliyun CLI
         run: |
-          # 使用官方安装脚本安装 Aliyun CLI
           curl -s https://raw.githubusercontent.com/aliyun/aliyun-cli/master/install.sh | sudo bash
-          # 验证安装
           aliyun version
 
       - name: Configure Aliyun CLI
@@ -34,13 +32,13 @@ jobs:
           aliyun configure set \
             --profile default \
             --mode AK \
-            --region "cn-shenzhen" \  
+            --region "${{ secrets.ALIYUN_REGION }}" \
             --access-key-id "${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}" \
             --access-key-secret "${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}"
 
       - name: Upload JAR to OSS
         run: |
-          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar --region cn-shenzhen
+          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar --region "${{ secrets.ALIYUN_REGION }}"
 
       - name: Update Alibaba Cloud Function
         run: |
