@@ -34,10 +34,11 @@ jobs:
           echo "[default]" > ~/.aliyun/credentials
           echo "access_key_id=${{ secrets.ALIYUN_ACCESS_KEY_ID }}" >> ~/.aliyun/credentials
           echo "access_key_secret=${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}" >> ~/.aliyun/credentials
+          echo "region=${{ secrets.ALIYUN_REGION }}" >> ~/.aliyun/credentials
 
       - name: Upload JAR to OSS
         run: |
-          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar
+          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar 
 
       - name: Update Alibaba Cloud Function
         run: |
