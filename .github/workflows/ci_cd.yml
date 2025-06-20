@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # 或你的 Java 版本
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Deploy to Alibaba Cloud Function Compute
+        env:
+          ALIBABA_CLOUD_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
+          ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
+          FUNCTION_NAME: your_function_name
+          SERVICE_NAME: your_service_name
+        run: |
+          # 安装阿里云 CLI
+          curl -o aliyun-cli.zip https://gosspublic.alicdn.com/aliyun-cli/2.0.50/aliyun-cli-linux-$(uname -m).zip
+          unzip aliyun-cli.zip
+          sudo ./bin/aliyun-cli install
+          # 登录阿里云
+          aliyun configure set --access-key-id $ALIBABA_CLOUD_ACCESS_KEY_ID --access-key-secret $ALIBABA_CLOUD_ACCESS_KEY_SECRET
+          # 部署函数
+          aliyun fc update-function --function-name $FUNCTION_NAME --service-name $SERVICE_NAME --code ./target/your-artifact.jar
