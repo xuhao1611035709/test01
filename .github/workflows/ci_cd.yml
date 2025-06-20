@@ -23,10 +23,10 @@ jobs:
 
       - name: Install Aliyun CLI
         run: |
-          curl -o aliyun-cli.zip https://aliyuncli.alicdn.com/aliyun-cli-linux-amd64.zip
-          unzip aliyun-cli.zip
-          sudo mv aliyun /usr/local/bin/
-          rm aliyun-cli.zip
+          # 使用官方安装脚本安装 Aliyun CLI
+          curl -s https://raw.githubusercontent.com/aliyun/aliyun-cli/master/install.sh | sudo bash
+          # 验证安装
+          aliyun version
 
       - name: Configure Aliyun CLI
         run: |
