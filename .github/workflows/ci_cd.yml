@@ -31,10 +31,8 @@ jobs:
       - name: Configure Aliyun CLI
         run: |
           mkdir -p ~/.aliyun
-          echo "[default]" > ~/.aliyun/credentials
-          echo "access_key_id=${{ secrets.ALIYUN_ACCESS_KEY_ID }}" >> ~/.aliyun/credentials
-          echo "access_key_secret=${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}" >> ~/.aliyun/credentials
-          echo "region=${{ secrets.ALIYUN_REGION }}" >> ~/.aliyun/credentials
+          aliyun configure set --profile default --mode AK --region cn-shenzhen --access-key-id ${{ secrets.ALIYUN_ACCESS_KEY_ID }} --access-key-secret ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+      
 
       - name: Upload JAR to OSS
         run: |
