@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-
-
+    
     @PostMapping("/register")
     public String register(String username, String password) {
         return "访问成功";
