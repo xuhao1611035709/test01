@@ -46,4 +46,3 @@ jobs:
             --region "${{ secrets.ALIYUN_REGION }}" \
             --header "Content-Type=application/json" \
             --body "{\"code\":{\"ossBucketName\":\"ci-cd-test\",\"ossObjectName\":\"books-v1.0.jar\"}}"
-      
