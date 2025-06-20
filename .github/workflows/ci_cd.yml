@@ -38,7 +38,7 @@ jobs:
 
       - name: Upload JAR to OSS
         run: |
-          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar 
+          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar --region cn-shenzhen
 
       - name: Update Alibaba Cloud Function
         run: |
