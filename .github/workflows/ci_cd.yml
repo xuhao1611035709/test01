@@ -38,7 +38,7 @@ jobs:
 
       - name: Upload JAR to OSS
         run: |
-          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar --region "${{ secrets.ALIYUN_REGION }}"
+          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/books-v1.0.jar --region "${{ secrets.ALIYUN_REGION }}" --force
 
       - name: List FC Functions
         run: |
