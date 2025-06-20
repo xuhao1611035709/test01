@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.jwvdp</groupId>
     <artifactId>books</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>v1.0</version>
     <name>books</name>
     <description>books</description>
     <url/>
