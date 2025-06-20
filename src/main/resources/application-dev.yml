@@ -1,0 +1,11 @@
+supabase:
+  url: https://ybklkhjcdqjhqzicbhfu.supabase.co
+  api-key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlia2xraGpjZHFqaHF6aWNiaGZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzMTA3NDQsImV4cCI6MjA2NTg4Njc0NH0.-xqVUofnxb93kIFaEA4wufq0JV0eS5o0cHDlDT8xc-g
+  # 可选的额外配置
+  http-client:
+    timeout: 30000  #超时设置
+    connection-timeout: 10000
+    max-connections: 10
+  auth:
+    auto-refresh-token: true
+    persist-session: true

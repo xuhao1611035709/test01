@@ -1,0 +1,42 @@
+#Server
+server:
+  port: 8082
+
+# MyBatis ???? PageHelper ??
+pagehelper:
+  pagehelper:
+    helper-dialect: pgsql
+    reasonable: true
+    support-methods-arguments: true
+spring:
+  profiles:
+    active: @profile.name@
+  application:
+    name: TrustCode
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 1000MB
+      enabled: true
+  datasource:
+      url: jdbc:postgresql://db.abcdefghijkl.supabase.co:5432/postgres
+      username: postgres
+      password: your-database-password
+      driver-class-name: org.postgresql.Driver
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.jwvdp.xinma.pojo.*
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+ThreadPool:
+  corePoolSize: 50
+  maxPoolSize: 100
+  queueCapacity: 10
+  keepAliveSeconds: 30
+
