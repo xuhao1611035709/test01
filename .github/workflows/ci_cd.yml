@@ -26,7 +26,7 @@ jobs:
         if: always() # 即使测试失败也生成报告
 
       - name: Upload test report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: target/site
@@ -36,7 +36,7 @@ jobs:
         run: mvn test jacoco:report
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-report
           path: target/site/jacoco
