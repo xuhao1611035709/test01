@@ -1,4 +1,4 @@
-package com.jwvdp.books;
+package com.jwvdp.books.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

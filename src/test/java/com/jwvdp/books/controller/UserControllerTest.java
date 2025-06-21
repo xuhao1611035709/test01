@@ -1,4 +1,5 @@
-import com.jwvdp.books.controller.UserController;
+package com.jwvdp.books.controller;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
