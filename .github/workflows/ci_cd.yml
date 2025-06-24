@@ -68,6 +68,7 @@ jobs:
         run: |
           # 创建Unix格式的bootstrap文件
           echo '#!/bin/sh' > bootstrap
+          # 修改这里：JAR文件现在将直接位于/code目录下，不再有额外的code子目录
           echo 'java -jar /code/books-v1.0.jar' >> bootstrap
 
           # 安装dos2unix并确保使用LF换行符（Unix格式）
@@ -87,18 +88,18 @@ jobs:
 
       - name: Create deployment package
         run: |
-          # 创建临时目录结构
-          mkdir -p deployment/code
-          
-          # 复制JAR和bootstrap到正确结构
-          cp ./target/books-v1.0.jar deployment/code/
+          # 创建临时目录结构 - 移除子目录code
+          mkdir -p deployment
+
+          # 修改这里：直接把JAR复制到deployment目录下，不再创建code子目录
+          cp ./target/books-v1.0.jar deployment/
           cp ./bootstrap deployment/
-          
+
           # 进入目录并创建ZIP包
           cd deployment
           zip -r ../function-deploy.zip .
-          
-          # 验证ZIP内容
+
+          # 验证ZIP包内容
           cd ..
           echo "ZIP package content:"
           unzip -l function-deploy.zip
