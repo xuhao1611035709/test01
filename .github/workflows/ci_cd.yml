@@ -107,3 +107,33 @@ jobs:
       - name: Upload ZIP package to OSS
         run: |
           echo "Uploading to environment: ${{ vars.ENVIRONMENT }}"
+          
+          # 获取OSS路径的目录部分用于列出验证
+          OSS_DIR=$(dirname "${{ vars.OSS_PATH }}")
+          
+          # 上传ZIP文件
+          aliyun oss cp ./function-deploy.zip oss://ci-cd-test/${{ vars.OSS_PATH }}.zip --region "${{ secrets.ALIYUN_REGION }}" --force
+          
+          # 验证上传
+          echo "Files in OSS bucket:"
+          aliyun oss ls oss://ci-cd-test/${OSS_DIR}/ --region "${{ secrets.ALIYUN_REGION }}"
+
+      - name: List FC Functions
+        run: |
+          echo "===== Listing all functions ====="
+          aliyun fc GET /2023-03-30/functions --region "${{ secrets.ALIYUN_REGION }}"
+          echo "===== End of functions list ====="
+
+      - name: Update Alibaba Cloud Function
+        run: |
+          aliyun fc PUT /2023-03-30/functions/${{ vars.FUNCTION_NAME }} \
+            --body '{
+              "code": {
+                "ossBucketName": "ci-cd-test",
+                "ossObjectName": "${{ vars.OSS_PATH }}.zip"
+              }
+            }' \
+            --header "Content-Type=application/json" \
+            --region "${{ secrets.ALIYUN_REGION }}"
+          
+          echo "Function update triggered - ${{ vars.FUNCTION_NAME }}"
