@@ -85,16 +85,34 @@ jobs:
           echo "File type:"
           file bootstrap
 
-      - name: Upload JAR and bootstrap to OSS
+      - name: Create deployment package
+        run: |
+          # 创建临时目录结构
+          mkdir -p deployment/code
+          
+          # 复制JAR和bootstrap到正确结构
+          cp ./target/books-v1.0.jar deployment/code/
+          cp ./bootstrap deployment/
+          
+          # 进入目录并创建ZIP包
+          cd deployment
+          zip -r ../function-deploy.zip .
+          
+          # 验证ZIP内容
+          cd ..
+          echo "ZIP package content:"
+          unzip -l function-deploy.zip
+
+      - name: Upload ZIP package to OSS
         run: |
           echo "Uploading to environment: ${{ vars.ENVIRONMENT }}"
-          # 上传JAR文件
-          aliyun oss cp ./target/books-v1.0.jar oss://ci-cd-test/${{ vars.OSS_PATH }} --region "${{ secrets.ALIYUN_REGION }}" --force
-
-          # 上传bootstrap文件到同一目录
+          
+          # 获取OSS路径的目录部分用于列出验证
           OSS_DIR=$(dirname "${{ vars.OSS_PATH }}")
-          aliyun oss cp ./bootstrap oss://ci-cd-test/${OSS_DIR}/bootstrap --region "${{ secrets.ALIYUN_REGION }}" --force
-
+          
+          # 上传ZIP文件
+          aliyun oss cp ./function-deploy.zip oss://ci-cd-test/${{ vars.OSS_PATH }}.zip --region "${{ secrets.ALIYUN_REGION }}" --force
+          
           # 验证上传
           echo "Files in OSS bucket:"
           aliyun oss ls oss://ci-cd-test/${OSS_DIR}/ --region "${{ secrets.ALIYUN_REGION }}"
@@ -108,3 +126,13 @@ jobs:
       - name: Update Alibaba Cloud Function
         run: |
           aliyun fc PUT /2023-03-30/functions/${{ vars.FUNCTION_NAME }} \
+            --body '{
+              "code": {
+                "ossBucketName": "ci-cd-test",
+                "ossObjectName": "${{ vars.OSS_PATH }}.zip"
+              }
+            }' \
+            --header "Content-Type=application/json" \
+            --region "${{ secrets.ALIYUN_REGION }}"
+          
+          echo "Function update triggered - ${{ vars.FUNCTION_NAME }}"
