@@ -11,7 +11,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(String username, String password) {
-        return "访问成功03";
+        return "访问成功01";
 
     }
 }

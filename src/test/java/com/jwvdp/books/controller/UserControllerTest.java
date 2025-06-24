@@ -22,6 +22,6 @@ public class UserControllerTest {
                 .param("username", "testuser")
                 .param("password", "password123"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("访问成功02"));
+                .andExpect(content().string("访问成功01"));
     }
 }

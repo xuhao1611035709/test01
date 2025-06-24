@@ -29,6 +29,6 @@ public class UserApiIntegrationTest {
                 "http://localhost:" + port + "/user/register", 
                 params, String.class);
 
-        assertThat(response).isEqualTo("访问成功02");
+        assertThat(response).isEqualTo("访问成功01");
     }
 }
